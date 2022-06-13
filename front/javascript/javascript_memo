@@ -1,0 +1,155 @@
+ルール
+・抽象的に書かない
+・コピペしない
+・例文を書く
+・文法以外は日本語で書く
+
+function
+関数宣言を行う
+引数を使用して関数の内容を定義する
+function 関数名(引数1,引数2) {
+  実行処理 return 引数1 + 引数2(戻り値);
+}
+
+console.log(関数名(引数1,引数2));
+「この場合は引数1,引数2を足した戻り値が出力される。」
+
+実行例
+function calcRectArea(width, height) {
+  return width * height;
+}
+
+console.log(calcRectArea(5, 6));
+// expected output: 30
+
+関数
+この中に引数や実行処理したい文を入力し、出力したい時は関数名を用いて使用する。
+
+引数
+その関数内で使用されるパラメーターの機能名。
+
+パラメーター
+関数に渡される名前付きの変数
+例文
+function 関数名(引数: 値) {
+  return 引数
+}
+(引数: 値)の一括りをパラメーターと言う
+
+戻り値
+実行処理の結果を呼び出し、その結果の値を使用する事ができる
+例　1＋1＝2⇦この2が使用できる。
+ちなみに1＋1＝⇦これは実行処理のこと
+
+return文
+関数が実行された時に、どの値を返すかを指定するできる
+例文
+function hoge() {
+  return 0; //「0」を返すように定義する
+}
+これで関数（実行したい処理の値）が完成
+この関数を出力する場合はconstを使用し変数に変換する
+
+console.log()
+()内に文字列や変数を書く事でウェブコンソールに出力するできる
+
+const
+変数宣言する構文、ただし「再代入、再宣言できない変数」
+例文
+function hoge() {
+  return 0;
+}
+const x = hoge; // xにhogeを代入した
+出力する場合は,
+console.log(x);
+
+NG例文
+const x = 1
+const x = 2; // こちらが再宣言 NG
+x = x +1; // こちらが再代入 NG
+
+for文
+繰り返し何か実行を行うための文
+for ([初期化式]; [条件式]; [加算式])
+  文
+例文
+for (let 変数 = 0; 変数 < 5; 変数++) {
+  // 値が0から4までけい5回実行される
+}
+こちらは、条件式の為このコードだけでは機能しない
+
+in文
+指定されたプロパティが指定されたオブジェクトにある場合はtrueを返す
+例文
+const car = { make: 'Honda'};
+console.log('make' in car); // carの中にmakeがあるのでtrue
+
+if文
+truthyならば条件文を実行、falsyならばfalsyの条件文を実行する条件分岐
+function tes(a) {
+  let result;
+  if (a > 0) {
+    result = 'postive';
+  } else {
+    result = 'NOT positive';
+  }
+  return result;
+}
+
+console.log(tes(-1));
+; // (tes(-1))値「-1」が0以上ならtrueを返し、0未満ならelseを返す
+
+三項演算子
+正しい値(true)と間違えの値(false)を設定して、当てはまったら方の値を返す。
+例文
+function 関数名(プロパティ) {
+  return (プロパティ ? '真値' : '偽値')
+}; // ？(疑問符)の後に真値、コロン(:)の後に偽値を書く
+
+console.log(関数名(true))
+
+console.log(関数名(false))
+結果
+> "真値"
+> "偽値"
+
+new 演算子
+関数内のプロパティに値を代入できる
+例文
+function 関数名(プロパティ1,プロパティ2,プロパティ3) {
+  this.値1 = 値1
+  this.値2 = 値2
+  this.値3 = 値3
+}; // thisでキーを指定することでオブジェクトを返さない場合はthisの値を返す
+
+const 変数 = new 関数名（値4, 値5, 値6,);
+console.log (変数名.値1);
+結果
+値4が出力される
+
+export
+同じ階層(ディレクトリ)のjsモジュール(拡張子が.jsのファイル、.tsや.tsxなど)から関数やオブジェクトを指定する事で、別のjsモジュールにimport文を使用すれば、指定した関数やオブジェクトを使用できる仕組み
+例文
+// 個別の機能のエクスポート
+// (var, let, const, function, class がエクスポート可能)
+./js_directory/index.js
+export let 変数名 = 処理内容
+
+exportとimportはセットとして考える
+import
+同じ階層のjsモジュールでexport文で指定された関数やオブジェクトを別のjsモジュールで関数やオブジェクトとして使用できる仕組み
+追記
+インポートされたモジュールは、宣言するかどうかにかかわらず、Strict モード(厳格)になります
+例文
+export文
+./js_directory/export.js
+export let 変数名 = 処理内容
+import文
+./js_directory/import.js
+import {変数名} from "./js_directory/export.js"
+console.log(変数名)
+
+
+of文
+
+getElementbyId
