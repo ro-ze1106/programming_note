@@ -149,6 +149,156 @@ import文
 import {変数名} from "./js_directory/export.js"
 console.log(変数名)
 
+プロパティ名のショートハンド
+オブジェクトの中の変数の名前がプロパティのキー名に、値がそのプロパティ値になっている
+例文
+const 変数1 = 111;
+const 変数2 = { 変数1 };
+console.log(変数2); // {baz : 111} 変数1がプロパティのキー名となり、値がプロパティ値になっている
+
+分割代入
+オブジェクトや配列から値を抽出する方法
+分割代入しない場合
+const 変数 = {
+  キー1: 値1
+  キー2: 値2
+}
+const message = `私は${変数,キー1}です。年齢は${変数,キー2}です。`
+console.log(message); // 私の名前は値1です。年齢は値2です。
+
+分割代入した場合
+const 変数 = {
+  キー1: 値1
+  キー2: 値2
+}
+const { キー1, キー2 } = 変数; // 分割代入
+const message = `私は${キー1}です。年齢は${キー2}です。`
+console.log(message); // 私の名前は値1です。年齢は値2です。
+分割代入をした場合は、キーが「変数の中身のキーということになる」ので変数を省略できる
+
+スプレット構文
+配列の内部の要素を順番に展開してくれる
+例文
+const arr1 = [1, 2, 3];
+console.log(arr1); // [1, 2, 3]　配列のまま出力される
+console.log(...arr1); // 1 2 3　要素を順番にして出力される
+
+&&(AND演算子)
+左辺がtruthyな値だと評価が右辺に渡される
+const hello = "Hello"
+true && console.log('1.', hello); // 1.Hello　左辺(ここでいうture)だったので、('1.', hello)評価されて「1.Hello」が出力された
+false && console.log('2.', hello); // (no outout)　左辺(ここでいうfalse)だったので出力されない
+
+||(OR演算子)
+左辺がfalsyな値だと評価が右辺に渡される
+const chao = 'Chao'
+true || console.log('1.', chao ); (no outout)　左辺(ここでいうtrue)だったので出力されない
+false || console.log('2.', chao );// 2.Chao　左辺(ここでいうfalse)だったので、('1.', chao)評価されて「2.Chao」が出力された
+
+&&(AND演算子)と||(OR演算子)でif文の代わりに使える
+
+？(オプショナルチェイニング)
+まだ必要か分からない要素を追加するか、省略するかを自動的に実行してくれる
+例文
+const users = [
+{
+  name: 'tomo',
+  adress: (
+    town: japan
+  ),
+},
+(
+  name: 'chika',
+  adress: ()
+),
+null,
+];
+for (U of users) {
+  const user = u ?? { name `(Somebody)`}
+  const town = user?.adress?.town ?? `(Somewhere)`:
+  console.log(`${users.name} live in ${town}`)
+}
+
+??(ヌリッシュ・コアレッシング)
+||(OR演算子)左辺がfalsyな値だと評価が右辺に渡されると似ているが
+こちらは、左辺がnullとundefinedの時だけ右辺を評価される。
+||(OR演算子)は0やから文字をスルーするので、??が使える時は??を利用しましょう。
+
+as文
+変数名を変更できる(グローバル変数ではない)
+例文
+./index.js
+export const ONE = 1
+export const TWO = 2
+./sum.js
+import { ONE, TWO as THREE } from './index.js'; // TWOの後にasとTHERRを書くことで変数名がTWOからTHREEに変更した
+
+const plus = ( n, m = ONE ) => n + m;
+const times = ( n, m = THREE ) => n * m;
+
+map文
+対象の配列の要素ひとつひとつ(繰り返し文)を任意に加工した新しい配列を返す
+例文
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+console.log(arr.map((n) => n * 2)); // [2, 4, 6, 8, 10, 12, 14, 16, 18] arrの配列内の全ての数字を2で乗算した
+
+filter文
+与えた条件に適合する要素だけ抽出した新しい配列を返す
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+console.log(arr.filter((n) => n % 3 === 0)); // [3, 6, 9]　arr配列内の数字を3で除算して余りが0になる数(剰余とは乗算を繰り返して割り切れなって余りの数を返すこと)
+
+find文
+与えた条件に適合した最初の要素を返す。見つからない場合はundefindを返す
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+console.log(arr.find((n) => n > 4)); // 5 4の次に大きい数字が5なので5を返す
+
+findIndex文
+与えた条件に適合した最初の要素のインデックスを返す。見つからない場合は-1を返す
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+console.log(arr.findIndex((n) => n > 4)); //4 分からない
+
+every文
+「与えた条件をすべての要素が満たすか」を真偽値で返す
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+console.log(arr.every((n) => n !== 0)); // true 配列内の数字が0でないのでtrue(正しい)になります
+
+some文
+「与えた条件を満たす要素がひとつでもあるか」を真偽値で返す
+例文
+const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+console.log(arr.some((n) => n >= 10)); // false 配列に10以上の数字がないためfalse(間違え)を返す
+
+
+！(論理否定演算子)(感嘆符)
+真偽値の値を反転させる
+例文
+!true = false
+!false = true
+
+reduce文
+第2引数に要素の値を順番に入れていき、第1引数は前回の実行結果が入ってくる
+例文
+const arr = [1, 2, 3, 4, 5];
+
+console.log(arr.reduce((n, m) => n + m)); // 15 1から5までの数字を順番に加算する。
+; // この場合は、1回目の実行は m = 1
+; // 2回目は m = 2 前回の実行結果により n = 1、結果が m = 1 + 2 = 3になる
+; // 3回目は m = 3 前回の実行結果により n = 3、結果が m = 3 + 3 = 6になる
+これを5回まで繰り返すことで15を返すことになる
+
+sort文
+並び替えのメソッド
+const arr = [ 1, 2, 3, 4, 5];
+
+console.log(arr.sort((n , m) => n > m ? -1 : 1)); // [5, 4, 3, 2, 1] 第1引数が第2引数よりも優先度が高いため、第2引数が前にくるので大きい順になる　conceptの比較関数を参照
+
+includes文
+「指定した要素がひとつでも含まれているか」を真偽値で返す
+例文
+const arr = [ 1, 2, 3, 4, 5];
+
+console.log(arr.includes(5)); // ture
+console.log(arr.includes(8)); // false
 
 of文
 
