@@ -1,3 +1,17 @@
+プリミティブ型
+数値、文字列、論理値、null、undefinedなどのデータ型
+例文
+let num = 3; // 数値
+let str = 'tomo'; // 文字列
+let boole = true; // 論理値
+
+ラッパーオブジェクト
+プリミティブ型をデータ型として扱う時のオブジェクト？
+例文
+数値 = number
+文字列 = string
+論理値 = boolean
+
 // 配列
 //配列の前に必ず型を書く
 const fruits: string[] = ['Apple', 'Banana', 'Grape'];
@@ -112,3 +126,45 @@ function error(message: string): void {
   throw error(message);
 }
 console.log(error('error'));
+共用体
+| 演算子
+|で繋げることで「何　または　何」といった定義ができる
+例文
+let id : number | string = 230
+id = 23
+id = 'tomo'; // id = 'tomo'になる
+idはnumbertまたはstring型を使用できる変数になった
+例文
+type A = {
+  foo: number;
+  bar?: string;
+};
+type B = { foo: string; };
+
+type AorB = A | B ; // {foo: number | string; bar?: string;}
+型同士の複合もできる
+
+交差型
+& 演算子
+&で繋げることで「何　かつ　何」といった定義ができる
+例文
+type A = { foo: number };
+type B = { bar: string };
+type C = {
+  foo?: string;
+  bazz: boolean;
+};
+type D = { foo: string }
+
+type AnB = A & B // { foo: number, bar: string} 
+type AnC = A & C // { foo: number, bazz: boolean} // type Cのfooは疑問符がついていて省略OKのため必然的にtype Aのfooが代入される
+
+type AnD = A & D // never型 numberとstring型は存在しないので、never型になる（エラーで教えてくれる）
+
+type CnAorB = C & (A | B) // { foo: number, bazz: boolean} or { foo?: number, bar: string, bazz: boolean} 
+// ひとつずつ考える
+まずは「C | A」はfoo?とbazzがあり、Aのfooを優先するので、{ foo: number, bazz: boolean;}になる
+次に「C | B」は、これはそのまま中身を合わせれば良いので、{ foo?: number, bar: string, bazz: boolean} 
+(A | B)は|(パイプ)でつながっているので、
+結果
+{ foo: number, bazz: boolean} or { foo?: number, bar: string, bazz: boolean} になる

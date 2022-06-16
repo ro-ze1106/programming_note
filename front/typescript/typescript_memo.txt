@@ -44,11 +44,12 @@ const human: Human = {
   greeting(message: string) {
     console.log(message);
   }
-}; // 出力した戻り値がにvoid型になる
+}; // 値を出力していないため戻り値がvoid型になる
 function human( age: number, weight: number ): number {
   return age + weight
 }; // こちらだとage + weightの出力（console .log (1+2)など)したらnumber型になる
-return文みたいに値を返すと何かしらの型がついてしまう為、値を返さない時はvoidを使用する
+return文みたいに値を返すと何かしらの型がついてしまう
+console.log()など値を返さない時はvoidを使用する(console.logだけとは限らない)
 
 typeof
 
@@ -292,3 +293,12 @@ tsconfig.json
 typescriptの設定ファイル
 使用方法
 tsc --initで作成
+
+関数オーバーロード
+同じ関数名に違う引数を定義すること
+例文
+const add = 同じ関数名(1)
+const add = 同じ関数名(2)
+const add = 同じ関数名(3)
+「同じ関数名」に違う引数(1, 2, 3)が入っている
+
