@@ -1,0 +1,11 @@
+stylelint
+CSSをlintterにあたるツール
+
+stylelint
+stylelint本体
+stylelint-config-standard
+stylelint公式による標準の共有設定
+stylelint-order
+stylelintの並び順に関するルールセットのプラグイン
+stylelint-config-recess-order
+RECESSにもとづくCSSの並び替えのための共有設定

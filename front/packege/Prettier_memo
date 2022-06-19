@@ -1,0 +1,8 @@
+Prettier
+インデントや改行などの記述スタイルをフォーマットを統一して整形してくれるツール
+
+ESLintにPrettierを追加に必要なパッケージ
+prettier
+Prettier本体
+eslint-config-prettier
+Prettierと競合する可能性のあるESlintの各種ルールを無効にする共有設定
