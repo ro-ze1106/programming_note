@@ -1,0 +1,106 @@
+Redux(reactとは別のライブラリである)
+状態管理のライブラリ
+
+用語
+Store
+アプリケーション全体で参照したい状態データの保管庫
+Action
+イベントにおける「何をどうしたいのか」という意図を表現したもの
+Dispatcher
+actionの種類を判断して、それに紐づけられたstoreの更新処理を行うもの
+Reducer
+「現在のState」と「受け取ったAction」に応じた新たなStateを返却する関数
+Reducer極限まで抽象化した式の例
+(prevState, action) => newstate
+
+公式スタイルガイド
+reactは記述量が多いなるので自分流の書き方をすると、コードが分かりづらくなるので公式スタイルガイド参考にして書き方のルールを設定する
+
+優先度A
+1、stateを直接書き換えない
+
+2、reducerに副作用を持たせない
+ここでいう副作用は、外部システムと通信したり、reducerの外の変数を書き換えたり、後から同じ値を作れないランダムな値を不用意にstateへ渡したりしないということ
+
+3、シリアライズできない値をstateやactionに入れない
+JSON.stringfy()した時に値が同一であることが保証されないものをstateやactionに入れるなってこと。(テストやデバッグが難しくなるし、予期せぬバグを生みかねないため)
+
+4、storeはひとつのアプリにつきひとつだけ
+
+Actionに関するルール
+5、actionをsetterではなくイベントとしてモデリングする
+6、actionの名前や意味を的確に表現したものにする
+7、actionタイプ名を「ドメインモデル/イベント種別」のフォーマットでかく
+例文
+ユーザーのプロフィール情報を更新するとき、actionを表現するのにsetterを使用すると次のようになる
+{
+  type: 'user/setName',
+  payload: { id: 12345, name: tomo}
+},
+{
+  type: 'user/setBirthday',
+  payload: { id: 12345, birthday: new Date('1996-11-24')}
+},
+こちらを「発生したイベント」として表現すると
+{
+  type: 'user/profileUpdated',
+  payload: { id: 12345, name: tomo, birthday: new Date('1996-11-24')}
+},
+こうすることで、dispatchされるactionの数も減るしactionログ履歴も見やすくなる。ついでに「ドメインモデル/イベント種別」のフォーマットでかくも同時で行なっている
+こうすることで5〜7のルールが同時に行える。
+
+8、actionをFSAに準拠させる
+例文
+TypScriptで定義してみるとこうなる
+type ActionType = {
+  type: string;
+  payload?: any;
+  error?: boolean;
+  meta?: { [key: string]: any };
+}
+error
+エラーを表現するもの
+meta
+エラー情報を格納するもの
+type
+正常系を表現するもの
+payload
+正常系の情報を格納するもの
+
+9、dispatchするactionは直に書かずにaction creatorを使用して生成する
+actionをdispatch({ type: 'counter/incremented'})のように生の値を渡さずaction creator関数を使用して作ること
+
+ツールやデザインパターンの利用に関するルール
+10、Reduxのロジックを書くときはRedex Tookitを使う
+
+11、イミュータブルな状態の更新にはImmerを使う
+Immerライブラリを使用することでネストが深いオブジェクトの更新で使用する
+
+12,デバッグにはRedux DevTools拡張を使う
+
+13、ファイル構造には、「Feature Folder」またはDucksパターンを適用する
+例文
+Feature Folder
+src/
+  features/
+    user/
+      user-actons.ts
+      user-reducer.ts
+    article/
+      article-actons.ts
+      article-reducer.ts
+
+Duck
+src/
+  ducks/
+    user.ts
+    article.ts
+
+その他設計に関するルール
+14、どの状態をどこに持たせるかは柔軟に考える
+
+15、フォーム状態をReduxに入れない
+
+16、複雑なロジックはコンポーネントの外に出す
+
+17、非同期処理にはRedex Thunkを使う
