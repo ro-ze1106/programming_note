@@ -1,0 +1,115 @@
+Storybook
+UIコンポーネントを分割して見た目や機能の操作できる
+
+Storybookは、小さな「アトミック」コンポーネントから構成されたページまで、あらゆるコンポーネントを構築するのに役立ちます。
+
+storybookの環境構築
+https://blog.microcms.io/storybook-react-use/
+
+React typescript storybook 環境構築
+https://zenn.dev/kiiiyo/articles/3c699ce1bc9dae
+
+ドキュメント通りに環境構築やってもエラーが出るので上記の通りにやる
+多分ドキュメントは、reactプロジェクトを導入してからやらないとローカルが起動できずエラーになる
+
+storybook起動
+yarn storybook
+
+Args
+「引数」のこと
+
+ユーザーインタラクション
+ユーザーが特定の操作を行なった時にシステムがその操作に応じた反応を返すこと
+
+play
+テストでインタラクションな書き方ができる
+
+
+
+PropTypes
+
+???.stories.js
+こちらの.stories.jsの拡張子が付くファイルにテストを書く
+
+プロパティ
+title
+State
+
+
+Essential addons
+エッセンシャルアドオン
+コンポーネントの編集や動作確認するための説明が書いてある
+
+storybookのコア機能を拡張するプラグインです
+
+コントロール
+コンポーネントの引数（入力）を動的に操作できる
+色やサイズなどを操作できる
+
+アクション
+インタラクションがコールバックされ正しい出力を生成することを確認できる
+ログインなどのパラメータなどが見れる
+
+テスト
+テストランナーとは
+すべてのストーリーを実行可能なテストに変換します
+
+Visual tests（視覚テスト）
+
+Chromatic
+スナップショット（UIの画像）を撮り、新規作成したストーリーの差分を表示してくれるアプリ
+
+こちらのコマンドを実行するとChromaticに差分が表示される
+npx chromatic --project-token（=bf323b81e117）　（）の部分は削除する　（）内はプロジェクトによって違う
+
+まず初めにこちらのエラーが出るので
+Module not found: Error: Can't resolve '@mdx-js/react' in '/Users/miyazakitomochika/storybooks/src/stories'
+@mdx-js/reactのパッケージをインストールする
+yarn:
+yarn add @mdx-js/react
+
+承認しないと
+✖ Found 11 visual changes: Review the changes at https://www.chromatic.com/build?appId=62b962aa24ddb1258dd1ec6e&number=8
+の警告が出る
+
+Actionsに☑️にホバーしてAccept component　しないと承認ならない
+
+￼
+
+Accessibility tests
+アクセシビリティテスト
+ストーリーブックを起動しAccessibilityを確認すると、UIにいくつかの顕著な違いが表示されます。新しいツールバーアイコンと、テストの結果を確認できるユーザー補助パネル。
+￼
+
+Interaction tests
+相互作用テスト
+UIのこれらの機能的側面を検証できます。
+コンポーネント内のボタンやログインが使用されているものからはじめ、そのボタンをクリックした時にどのような挙動をしてUIとコンポーネントが正しく更新されているかどうかを確認する
+
+Snapshot tests
+スナップショットテスト
+レンダリングされたUIとベースライン（コード）を比較し、エラーや警告を出すテスト
+src/storybook.test.js
+
+ストーリーの並べ替え
+デフォルトでは、ストーリーはインポートされた順序で並べ替えられます。
+例
+// .storybook/preview.js
+
+export const parameters = {
+  options: {
+    storySort: {
+      order: ['Intro', 'Pages', ['Home', 'Login', 'Admin'], 'Components'],
+    },
+  },
+};
+
+これにより、このストーリーの順序が決まります。
+1. IntroそしてIntro/*物語
+2. Pages話
+3. Pages/HomeとPages/Home/*物語
+4. Pages/LoginとPages/Login/*物語
+5. Pages/AdminとPages/Admin/*物語
+6. Pages/*ストーリー
+7. ComponentsとComponents/*物語
+8. 他のすべての物語
